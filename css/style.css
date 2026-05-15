@@ -5465,7 +5465,6 @@ div.note.poo::before {
   content: '\f2fe';
 }
 #BKG {
-  background-image: url("/blog/assets/images/background.jpg");
   background-size: cover;
   z-index: -20;
   position: fixed;
