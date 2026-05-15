@@ -2960,12 +2960,12 @@ article > p {
 <h2 id="map-系列"><a href="#map-系列" class="headerlink" title="map 系列"></a>map 系列</h2><h3 id="省份地图-label-自定义位置"><a href="#省份地图-label-自定义位置" class="headerlink" title="省份地图 label 自定义位置"></a>省份地图 label 自定义位置</h3><blockquote>
 <p>问题描述：<br>经常有需求会要求在省份、城市中心显示 label<br>map 系列中 label 的属性 position 和 offset 经测试偏移无效<br>并且一个个 “看着大概偏移” 改麻烦的很..<br>开启 legend 组件，这俩属性才有效，暂不知道为啥<br>legend 组件会造成区域上有一个点，也不太好去除</p>
 </blockquote>
-<img src="/blog/posts/2354/map-label-center-use-label.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="map-label-center-use-label.jpg" alt="image"/></div></div>
 
 <blockquote>
 <p>解决办法：<br>放弃使用默认 label，使用 markPoint 模拟 label<br>markPoint data 中项的属性 coord 可以自定义 mark 位置(百度坐标拾取器提取经纬度)<br>然后将图标隐藏（sysbom 空图片 或 大小设置为 1都行）</p>
 </blockquote>
-<img src="/blog/posts/2354/map-label-center-use-markPoint.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="map-label-center-use-markPoint.jpg" alt="image"/></div></div>
 
 <h3 id="series-散点无效"><a href="#series-散点无效" class="headerlink" title="series 散点无效"></a>series 散点无效</h3><blockquote>
 <p>必须指定 geo，否则无效<br>暂时不知道 geo 和 series 中 type = map 有什么区别…</p>
@@ -3009,7 +3009,7 @@ article > p {
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-05-15T07:36:54+00:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-05-15T08:46:37+00:00">
   <a class='notlink'>
     <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
     <p>更新于：2026年5月15日</p>

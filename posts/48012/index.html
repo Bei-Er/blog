@@ -2952,7 +2952,7 @@ article > p {
 <li>在 vue.config.js devServer 中删除 before，加入 proxy 即可</li>
 <li>注意 development 模式，默认请求会加上 /dev-api 前缀，在 .env.development 中设置</li>
 </ul>
-<img src="/blog/posts/48012/vue-element-admin-1.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="vue-element-admin-1.jpg" alt="image"/></div></div>
 
 <p>———— 手动间隙 ————</p>
 <hr>
@@ -2961,23 +2961,23 @@ article > p {
 <li>实际使用时，这里的逻辑肯定要改掉，可以删除拦截，或改成自己应用的状态码进行判断</li>
 <li>下图的代码 /src/utils/request.js</li>
 </ul>
-<img src="/blog/posts/48012/vue-element-admin-2.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="vue-element-admin-2.jpg" alt="image"/></div></div>
 
 <p>———— 手动间隙 ————</p>
 <hr>
 <h3 id="登录逻辑"><a href="#登录逻辑" class="headerlink" title="登录逻辑"></a>登录逻辑</h3><p>修改 src/api/user.js 中的 login 方法的接口地址（这里接口必须返回用户身份标识 token）<br>修改 src/store/modules/user.js 中的 actions.login 函数（主要是统一 key 值，如下图）</p>
-<img src="/blog/posts/48012/vue-element-admin-3.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="vue-element-admin-3.jpg" alt="image"/></div></div>
 
 <p>———— 手动间隙 ————</p>
 <hr>
 <h3 id="进页面时的登录状态验证"><a href="#进页面时的登录状态验证" class="headerlink" title="进页面时的登录状态验证"></a>进页面时的登录状态验证</h3><p>具体代码在 src/permission.js router.beforeEach 函数中（下图1）<br>简单来说就是判断是否有 token 来确认是否登录（token 在 store user 模块中）<br>若没登录，则判断当前页面是否要登录后才可访问（下图2，whiteList 中的路径不需要登录后访问）<br>若需要登录，则重定向到登录页面<br>若不需要，则继续正常访问</p>
-<img src="/blog/posts/48012/vue-element-admin-4.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="vue-element-admin-4.jpg" alt="image"/></div></div>
 <p>———— 手动间隙 ————</p>
-<img src="/blog/posts/48012/vue-element-admin-5.png" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="vue-element-admin-5.png" alt="image"/></div></div>
 
 <hr>
 <h3 id="管理员身份权限管理"><a href="#管理员身份权限管理" class="headerlink" title="管理员身份权限管理"></a>管理员身份权限管理</h3><p>具体代码在 src/permission.js router.beforeEach 函数中<br>在页面切换的时候，若无管理员身份信息（store user/roles）<br>会重新通过接口获取（actions user.getInfo）<br>getInfo 应该返回一个权限数组<br>之后根据用户权限（roles）和预先定义的动态路由（/router/index.js 中的 asyncRoutes）<br>使用 router.addRoutes 动态注册路由<br>若项目中只有一种管理员身份，这里直接写死就好，不用走接口，如下图</p>
-<img src="/blog/posts/48012/vue-element-admin-6.jpg" class="">
+<div class="img-wrap"><div class="img-bg"><img class="img" src="vue-element-admin-6.jpg" alt="image"/></div></div>
 
 <hr>
 <h2 id="vue-admin-template"><a href="#vue-admin-template" class="headerlink" title="vue-admin-template"></a>vue-admin-template</h2><blockquote>
@@ -3025,7 +3025,7 @@ article > p {
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-05-15T07:36:54+00:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-05-15T08:46:37+00:00">
   <a class='notlink'>
     <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
     <p>更新于：2026年5月15日</p>
