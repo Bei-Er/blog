@@ -10,10 +10,6 @@
   <!-- SEO相关 -->
   
     
-      
-        <meta name="robots" content="noindex,follow">
-      
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -30,9 +26,13 @@
 
   <!-- 页面元数据 -->
   
-  <title>贝er</title>
+  <title>记录 - router-view的key - 贝er</title>
+  
+    <meta name="keywords" content="vue">
   
 
+  
+    <meta name="description" content="时不时就被坑一下">
   
 
   <!-- feed -->
@@ -2813,7 +2813,7 @@ article > p {
   
     
       <!-- see: /layout/_partial/scripts/coverCtrl.ejs -->
-        <div id="none" class='cover-wrapper  search' style="display: none;">
+        <div id="none" class='cover-wrapper post search' style="display: none;">
           
             <div class='cover-bg' style='background-image:url()'></div>
           
@@ -2891,290 +2891,164 @@ article > p {
 
 
 <div id="l_main" class=''>
+  <article class=" article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
-  <section class="post-list">
+
+
+  
+  <div class="article-meta" id="top">
     
     
-      
+    
+      <h1 class="title">
+        记录 - router-view的key
+      </h1>
+      <div class='new-meta-box'>
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/blog/posts/22884/">
-        ⛲ 记录 - window.opener
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <p>该方法可以实现在页面中点击按钮，跳转到另外一个游览器 tab 页面（简称为新页面），<br>在新页面处理完成逻辑后，可以向原页面发送通知，常用于 oauth 登录等功能。</p>
-    
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="https://bei-er.github.io/blog/" rel="nofollow">
+    <img no-lazy src="https://avatars.githubusercontent.com/u/28495915?v=4">
+    <p>贝er</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fad fa-keyboard PETERRIVE fa-fw" aria-hidden="true"></i>
+      <p>字数：405 字</p>
+    </a>
   </div>
-  
-    <div class='meta-v3' line_style='hidden'>
-      <div>
-        
-        <time>2019-11-08</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/blog/categories/%E8%AE%B0%E5%BD%95/">记录</a>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fad fa-hourglass-half BELIZEHOLE fa-fw" aria-hidden="true"></i>
+      <p>时长：1 分钟</p>
+    </a>
+  </div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  
+  <p>时不时就被坑一下</p>
+<span id="more"></span>
+
+<h2 id="key-的作用"><a href="#key-的作用" class="headerlink" title="key 的作用"></a>key 的作用</h2><p>key 的作用是告诉 Vue 组件需要重新渲染<br>默认情况下 Vue 会复用组件实例，导致组件的生命周期钩子函数不会被调用，页面也不会更新。</p>
+<h2 id="坑点"><a href="#坑点" class="headerlink" title="坑点"></a>坑点</h2><p>通常是路由自己跳转自己时会出现<br>比如从 /article?title=文章1 跳转到 /article?title=文章2<br>这时候默认行为是组件实例没有被销毁，生命周期钩子函数没有被调用，页面也不会更新。</p>
+<h2 id="四种用法"><a href="#四种用法" class="headerlink" title="四种用法"></a>四种用法</h2><pre><code class="vue">
+&lt;template&gt;
+    &lt;!-- 默认用法，会复用组件，导致生命周期钩子不生效 --&gt;
+    &lt;router-view&gt;&lt;/router-view&gt;
+
+    &lt;!-- 只有 path 发生变化才会触发重新渲染，query 部分变化不会触发 --&gt;
+    &lt;!-- 建议这种用法，保留了 $router.replace(&#123; params, query &#125;) 的能力 --&gt;
+    &lt;router-view :key=&quot;$route.path&quot;&gt;&lt;/router-view&gt;
+
+    &lt;!-- path 和 query 都发生变化才会触发重新渲染，会导致失去不触发渲染修改 url 的能力 --&gt;
+    &lt;router-view :key=&quot;$route.fullPath&quot;&gt;&lt;/router-view&gt;
+
+    &lt;!-- 自己维护 key，属于兼容方案 --&gt;
+    &lt;router-view :key=&quot;routerViewKey&quot;&gt;&lt;/router-view&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+    export default &#123;
+        computed: &#123;
+            routerViewKey() &#123;
+                if (this.$route.path.startsWith(&#39;/compliance/chat/expert&#39;)) &#123;
+                    return this.$router.path
+                &#125;
+                else &#123;
+                    return this.$router.fullPath
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>项目中建议用 $route.path 的作为 key，保留了不刷新页面修改 url 的能力，即 $router.replace({ params, query })<br>如果部分页面需要在 query 变化时刷新页面，可以各自在 beforeRouteUpdate 中实现</p>
+
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <!-- <a class='readmore' href='/blog/posts/22884/'>
-            <i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多
-          </a> -->
-          <a class="link-fx-1 color-contrast-higher" href="/blog/posts/22884/">
-            <span><i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多</span>
-            <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"/><line x1="10" y1="18" x2="16" y2="12"/><line x1="16" y1="12" x2="22" y2="18" /></g></svg>
-          </a>
-        </div>
+      
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/blog/tags/vue/" rel="nofollow"><i class="fad fa-hashtag WETASPHALT fa-fw" aria-hidden="true"></i><p>vue</p></a></div>
+
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-06-11T03:25:58+00:00">
+  <a class='notlink'>
+    <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
+    <p>更新于：2026年6月11日</p>
+  </a>
 </div>
 
-          </div>
         
       
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/blog/posts/20528/">
-        🤺 记录 - 伪类选择器 hover 移动端的表现
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <p>用 hover 实现模拟 select，移入显示 option，移出隐藏 option，<br>在做移动端适配时，在 safari 游览器中发现了 bug，<br>做这种效果移动端还是尽量用 JS 绑定 class 的方式实现吧。🙃</p>
-    
-  </div>
-  
-    <div class='meta-v3' line_style='hidden'>
-      <div>
+          <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fad fa-calendar-alt TURQUOISE fa-fw" aria-hidden="true"></i>
+    <p>发布于：2026年6月11日</p>
+  </a>
+</div>
+
         
-        <time>2019-11-08</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/blog/categories/%E8%AE%B0%E5%BD%95/">记录</a>
-        
-      </div>
-      
-        <div>
-          <!-- <a class='readmore' href='/blog/posts/20528/'>
-            <i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多
-          </a> -->
-          <a class="link-fx-1 color-contrast-higher" href="/blog/posts/20528/">
-            <span><i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多</span>
-            <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"/><line x1="10" y1="18" x2="16" y2="12"/><line x1="16" y1="12" x2="22" y2="18" /></g></svg>
-          </a>
-        </div>
       
     </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/blog/posts/7263/">
-        🤔 记录 - 到底是谁的滚动条
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <p>网页中默认的滚动条到底是哪个元素的？ body？html？😵</p>
-    
   </div>
+
+
   
-    <div class='meta-v3' line_style='hidden'>
-      <div>
-        
-        <time>2019-11-08</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/blog/categories/%E8%AE%B0%E5%BD%95/">记录</a>
-        
-      </div>
-      
-        <div>
-          <!-- <a class='readmore' href='/blog/posts/7263/'>
-            <i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多
-          </a> -->
-          <a class="link-fx-1 color-contrast-higher" href="/blog/posts/7263/">
-            <span><i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多</span>
-            <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"/><line x1="10" y1="18" x2="16" y2="12"/><line x1="16" y1="12" x2="22" y2="18" /></g></svg>
-          </a>
-        </div>
-      
-    </div>
   
 
-</div>
+  <!-- 强制隐藏上一篇和下一篇，因为可能会暴露日记内容 -->
+  
+</article>
 
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/blog/posts/26243/">
-        🦵 酷库 - 低版本IE辅助库
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <p>万恶的 IE…..<br>啥高科技都用不了，有时候项目需要兼容实在蛋疼，这里整理下解决方案。</p>
-    
-  </div>
-  
-    <div class='meta-v3' line_style='hidden'>
-      <div>
-        
-        <time>2019-11-08</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/blog/categories/%E9%85%B7%E5%BA%93/">酷库</a>
-        
-      </div>
-      
-        <div>
-          <!-- <a class='readmore' href='/blog/posts/26243/'>
-            <i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多
-          </a> -->
-          <a class="link-fx-1 color-contrast-higher" href="/blog/posts/26243/">
-            <span><i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多</span>
-            <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"/><line x1="10" y1="18" x2="16" y2="12"/><line x1="16" y1="12" x2="22" y2="18" /></g></svg>
-          </a>
-        </div>
-      
-    </div>
+
   
 
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/blog/posts/57202/">
-        🎯 酷库 - 滚动监听
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        skrollr
-根据页面滚动条的位置，做细微过度动画的库。
-
-Githubgithubhttps://github.com/Prinzhorn/skrollr
-
-用法
-待
-
-scrollreveal
-简单来说就是在页面滚动到指定位置时，给元素加一个动画类。
-
-Githubgithubhttps://github.com/jlmakes/scrollreveal
-
-用法
-待
-
-gumshoe
-...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='hidden'>
-      <div>
-        
-        <time>2019-11-08</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/blog/categories/%E9%85%B7%E5%BA%93/">酷库</a>
-        
-      </div>
-      
-        <div>
-          <!-- <a class='readmore' href='/blog/posts/57202/'>
-            <i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多
-          </a> -->
-          <a class="link-fx-1 color-contrast-higher" href="/blog/posts/57202/">
-            <span><i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多</span>
-            <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"/><line x1="10" y1="18" x2="16" y2="12"/><line x1="16" y1="12" x2="22" y2="18" /></g></svg>
-          </a>
-        </div>
-      
-    </div>
   
 
-</div>
 
-          </div>
-        
-      
-    
-  </section>
-  
-    
-      <br>
-      <div class="prev-next">
-        
-          <a class="prev" rel="prev" href="/blog/page/7/">
-            <section class="post prev white-box shadow" >
-              <i class="fad fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页&nbsp;
-            </section>
-          </a>
-        
-        <p class="current">
-          8 / 8
-        </p>
-        
-      </div>
-    
-  
+
+
 
 
 </div>
@@ -3224,198 +3098,22 @@ gumshoe
     
     
 
-<section class="widget shadow desktop">
-  
-  <header>
-    
-      <i class="fad fa-award ASBESTOS fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
-    
-  </header>
 
 
-  <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>75 篇</div>
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2019/06/01'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-        <div class="webinfo-item">
-          <div>本站总字数：</div>
-          <div>29.8k </div>
-        </div>
-      
-
-      
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Thu Jun 11 2026 03:26:37 GMT+0000 (Coordinated Universal Time)</div>
-            <div id="last-update-show">2026-06-11 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2026-06-11 日';
-          }
-        </script>
-        
-      
-    </div>
-  </div>
-</section>
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget category shadow desktop">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/categories/'><i class="fad fa-folder-open CARROT fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fad fa-list ASBESTOS fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E5%8F%A5%E5%AD%90/" href="/blog/categories/%E5%8F%A5%E5%AD%90/"
-            id="blogcategoriesE58FA5E5AD90"
-            ><div class='name'>句子</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E8%AE%B0%E5%BD%95/" href="/blog/categories/%E8%AE%B0%E5%BD%95/"
-            id="blogcategoriesE8AEB0E5BD95"
-            ><div class='name'>记录</div><div class='badge'>(27)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E9%85%B7%E5%BA%93/" href="/blog/categories/%E9%85%B7%E5%BA%93/"
-            id="blogcategoriesE985B7E5BA93"
-            ><div class='name'>酷库</div><div class='badge'>(41)</div></a></li>
-        
-      </ul>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#key-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">key 的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%91%E7%82%B9"><span class="toc-text">坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E7%94%A8%E6%B3%95"><span class="toc-text">四种用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">总结：</span></a></li></ol>
     </div>
   </section>
 
-
-  
-
-  
-    
-    
-
-<section class="widget list shadow desktop mobile">
-  
-  <header>
-    
-      <i class="fad fa-align-justify POMEGRANATE fa-fw" aria-hidden="true"></i><span class='name'>更多</span>
-    
-  </header>
-
-
-  <div class='content'>
-    <ul class="list entry navigation">
-      
-        <li><a class="flat-box" title="/blog/docs/lodash/collection" href="/blog/docs/lodash/collection"
-          
-          
-          id="blogdocslodashcollection"
-          >
-          <div class='name'>
-            
-            更好的 lodash 文档
-          </div>
-          
-        </a></li>
-      
-        <li><a class="flat-box" title="/blog/docs/moment/parsing" href="/blog/docs/moment/parsing"
-          
-          
-          id="blogdocsmomentparsing"
-          >
-          <div class='name'>
-            
-            更好的 moment 文档
-          </div>
-          
-        </a></li>
-      
-    </ul>
-  </div>
-</section>
 
   
 
@@ -3429,8 +3127,8 @@ gumshoe
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="记录 - router-view的key";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   //  see: /layout/_partial/scripts/coverCtrl.ejs
