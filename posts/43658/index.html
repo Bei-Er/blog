@@ -3105,7 +3105,7 @@ docEditor.serviceCommand(&#39;insert&#39;, JSON.stringify(&#123;
 </code></pre>
 <p>应用层接收并处理插件消息</p>
 <pre><code class="javascript">window.addEventListener(&#39;message&#39;, (e) =&gt; &#123;
-  const &#123; command, data &#125; = JSON.parse(e.data)
+  const &#123; command, data &#125; = JSON.parse(e.data).data
   
   switch (command) &#123;
     case &#39;myPluginMessage&#39;:
@@ -3153,10 +3153,10 @@ docEditor.serviceCommand(&#39;insert&#39;, JSON.stringify(&#123;
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-06-23T08:50:48+00:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-07-08T08:06:53+00:00">
   <a class='notlink'>
     <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
-    <p>更新于：2026年6月23日</p>
+    <p>更新于：2026年7月8日</p>
   </a>
 </div>
 
