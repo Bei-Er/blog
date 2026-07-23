@@ -2666,11 +2666,11 @@ article > p {
                       
             
               <li>
-                <a class="menuitem flat-box faa-parent animated-hover" href=/blog/docs/vue-use/test
+                <a class="menuitem flat-box faa-parent animated-hover" href=/blog/docs/vue-use/state
                   
                   
                   
-                    id="blogdocsvue-usetest"
+                    id="blogdocsvue-usestate"
                   >
                   更好的 vue-use 文档
                 </a>
@@ -2813,11 +2813,11 @@ article > p {
                       
             
               <li>
-                <a class="menuitem flat-box faa-parent animated-hover" href=/blog/docs/vue-use/test
+                <a class="menuitem flat-box faa-parent animated-hover" href=/blog/docs/vue-use/state
                   
                   
                   
-                    id="blogdocsvue-usetest"
+                    id="blogdocsvue-usestate"
                   >
                   更好的 vue-use 文档
                 </a>
@@ -2905,10 +2905,10 @@ article > p {
               <p>moment</p>
             </a>
           
-            <a href="/blog/docs/vue-use/test"
+            <a href="/blog/docs/vue-use/state"
               
               
-              id="blogdocsvue-usetest">
+              id="blogdocsvue-usestate">
               <p>vue-use</p>
             </a>
           
@@ -2960,13 +2960,13 @@ article > p {
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fad fa-keyboard PETERRIVE fa-fw" aria-hidden="true"></i>
-      <p>字数：209 字</p>
+      <p>字数：550 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
     <a class='notlink'>
       <i class="fad fa-hourglass-half BELIZEHOLE fa-fw" aria-hidden="true"></i>
-      <p>时长：1 分钟</p>
+      <p>时长：3 分钟</p>
     </a>
   </div>
 
@@ -2984,7 +2984,7 @@ article > p {
   <p>例子为 vue3 组合式函数，原理是一样的，粘贴代码改一改就可以</p>
 <span id="more"></span>
 
-<pre><code class="typescript">import * as taskApi from &#39;@/api/modules/task&#39;
+<h2 id="普通例子"><a href="#普通例子" class="headerlink" title="普通例子"></a>普通例子</h2><pre><code class="typescript">import * as taskApi from &#39;@/api/modules/task&#39;
 import &#123; ref &#125; from &quot;vue&quot;;
 
 let cacheOptions = null;
@@ -3046,6 +3046,93 @@ export function useOptions () &#123;
   &#125;;
 &#125;
 </code></pre>
+<h2 id="使用了-vue-use-的例子"><a href="#使用了-vue-use-的例子" class="headerlink" title="使用了 vue-use 的例子"></a>使用了 vue-use 的例子</h2><pre><code class="typescript">import &#123; ref &#125; from &quot;vue&quot;;
+import &#123; createGlobalState &#125; from &#39;@vueuse/core&#39;
+import * as taskApi from &#39;@/api/modules/task&#39;
+import &#123; convertStringValuesToNumber &#125; from &#39;@/utils/convert-string-values-to-number&#39;
+
+export const useOptions = createGlobalState(() =&gt; &#123;
+  const options = ref&lt;&#123;
+    org_lists: Record&lt;string, any&gt;[],
+    check_type_lists: Record&lt;string, any&gt;[],
+    product_type_lists: Record&lt;string, any&gt;[],
+    schema_template_lists: Record&lt;string, any&gt;[],
+    report_template_lists: Record&lt;string, any&gt;[],
+    leader_user_lists: Record&lt;string, any&gt;[],
+    inspector_lists: Record&lt;string, any&gt;[],
+
+    org_department_lists: Record&lt;string, any&gt;[],
+    reason_type_lists: Record&lt;string, any&gt;[],
+    subject_label_lists: Record&lt;string, any&gt;[]
+  &#125;&gt;(&#123;
+    org_lists: [],
+    check_type_lists: [],
+    product_type_lists: [],
+    schema_template_lists: [],
+    report_template_lists: [],
+    leader_user_lists: [],
+    inspector_lists: [],
+
+    org_department_lists: [],
+    reason_type_lists: [],
+    subject_label_lists: []
+  &#125;)
+
+  // 更新次数
+  const updateCount = ref(0)
+
+  // 未完成的 promise
+  const pendingPromise = ref&lt;Promise&lt;void&gt; | null&gt;(null)
+
+  async function update (&#123; force = false &#125; = &#123;&#125;) &#123;
+    // *使用缓存
+    if (updateCount.value &gt; 0 &amp;&amp; !force) &#123;
+      return null
+    &#125;
+
+    // *强制刷新先等上一个请求结束
+    if (force &amp;&amp; pendingPromise) &#123;
+      await pendingPromise.value
+    &#125;
+
+    // *防止重复请求
+    if (!pendingPromise.value) &#123;
+      pendingPromise.value = (async () =&gt; &#123;
+        try &#123;
+          let &#123; data &#125; = await taskApi.getTaskOptions()
+
+          data = convertStringValuesToNumber(data)
+
+          options.value.org_lists = data.org_lists
+          options.value.check_type_lists = data.check_type_lists
+          options.value.product_type_lists = data.product_type_lists
+          options.value.schema_template_lists = data.schema_template_lists
+          options.value.report_template_lists = data.report_template_lists
+          options.value.leader_user_lists = data.leader_user_lists
+          options.value.inspector_lists = data.inspector_lists
+
+          options.value.org_department_lists = data.org_department_lists
+          options.value.reason_type_lists = data.reason_type_lists
+          options.value.subject_label_lists = data.subject_label_lists
+        &#125;
+        finally &#123;
+          updateCount.value++
+          pendingPromise.value = null
+        &#125;
+      &#125;)()
+    &#125;
+
+    // *等待缓存赋值后使用缓存数据
+    // *这里不能写 else，第一个调用者也统一使用缓存赋值
+    await pendingPromise.value
+  &#125;
+
+  return &#123;
+    options,
+    update
+  &#125;
+&#125;)
+</code></pre>
 
   
   
@@ -3085,7 +3172,7 @@ export function useOptions () &#123;
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-07-23T08:49:53+00:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-07-23T09:39:39+00:00">
   <a class='notlink'>
     <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
     <p>更新于：2026年7月23日</p>
@@ -3173,6 +3260,20 @@ export function useOptions () &#123;
     
 
 
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fad fa-list ASBESTOS fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E4%BE%8B%E5%AD%90"><span class="toc-text">普通例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BA%86-vue-use-%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">使用了 vue-use 的例子</span></a></li></ol>
+    </div>
+  </section>
 
 
   
