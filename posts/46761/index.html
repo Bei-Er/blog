@@ -2960,7 +2960,7 @@ article > p {
   <div class="new-meta-item wordcount">
     <a class='notlink'>
       <i class="fad fa-keyboard PETERRIVE fa-fw" aria-hidden="true"></i>
-      <p>字数：267 字</p>
+      <p>字数：84 字</p>
     </a>
   </div>
   <div class="new-meta-item readtime">
@@ -2984,52 +2984,14 @@ article > p {
   <p>整合各种情况下虚拟列表的实用库</p>
 <span id="more"></span>
 
-<h2 id="vue-virtual-scroller"><a href="#vue-virtual-scroller" class="headerlink" title="vue-virtual-scroller"></a>vue-virtual-scroller</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/Akryum/vue-virtual-scroller">https://github.com/Akryum/vue-virtual-scroller</a></p>
-</blockquote>
+<h2 id="vue-virtual-scroller（可动态高度）"><a href="#vue-virtual-scroller（可动态高度）" class="headerlink" title="vue-virtual-scroller（可动态高度）"></a>vue-virtual-scroller（可动态高度）</h2><p>github</p>
 <div class="tag link"><a class="link-card" title="github" target="_blank" rel="noopener" href="https://github.com/Akryum/vue-virtual-scroller"><div class="left"><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/256/safari.png"/></div><div class="right"><p class="text">github</p><p class="url">https://github.com/Akryum/vue-virtual-scroller</p></div></a></div>
 
-<h3 id="使用例子"><a href="#使用例子" class="headerlink" title="使用例子"></a>使用例子</h3><blockquote>
-<p>用 scroll-end 事件可以实现滚动加载<br>不支持 table 结构，不过用 div 模拟 table 结构可以实现</p>
-</blockquote>
-<pre><code class="vue">  &lt;!-- items 和 item-size 是必须传入的 --&gt;
-  &lt;!-- item-size 可以不写，代表动态高度，需要在项数据里指定 size 表示高度 --&gt;
-  &lt;Recycle-Scroller
-    :items=&quot;list&quot;
-    :item-size=&quot;32&quot;&gt;
+<p>看例子吧，每个例子的下面有实现源码</p>
+<div class="tag link"><a class="link-card" title="官方例子" target="_blank" rel="noopener" href="https://vue-virtual-scroller.netlify.app/demos/"><div class="left"><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/256/safari.png"/></div><div class="right"><p class="text">官方例子</p><p class="url">https://vue-virtual-scroller.netlify.app/demos/</p></div></a></div>
 
-    &lt;template slot=&quot;before&quot;&gt;
-      before
-    &lt;/template&gt;
-
-    &lt;template slot-scope=&quot;&#123; item, index &#125;&quot;&gt;
-      &lt;div class=&quot;td&quot;&gt;&#123;&#123; item.name &#125;&#125;&lt;/div&gt;
-    &lt;/template&gt;
-    
-    &lt;template slot=&quot;after&quot;&gt;
-      after
-    &lt;/template&gt;
-
-  &lt;/Recycle-Scroller&gt;
-</code></pre>
-<hr>
-<h2 id="vue-virtual-scroll-list"><a href="#vue-virtual-scroll-list" class="headerlink" title="vue-virtual-scroll-list"></a>vue-virtual-scroll-list</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/tangbc/vue-virtual-scroll-list">https://github.com/tangbc/vue-virtual-scroll-list</a></p>
-</blockquote>
-<div class="tag link"><a class="link-card" title="github" target="_blank" rel="noopener" href="https://github.com/tangbc/vue-virtual-scroll-list"><div class="left"><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/256/safari.png"/></div><div class="right"><p class="text">github</p><p class="url">https://github.com/tangbc/vue-virtual-scroll-list</p></div></a></div>
-
-<h3 id="使用例子-1"><a href="#使用例子-1" class="headerlink" title="使用例子"></a>使用例子</h3><blockquote>
-<p>暂时没用过，感觉不如 vue-virtual-scroller，不能使用 slot。</p>
-</blockquote>
-<hr>
-<h2 id="wchbrad-vue-easy-tree"><a href="#wchbrad-vue-easy-tree" class="headerlink" title="@wchbrad/vue-easy-tree"></a>@wchbrad/vue-easy-tree</h2><blockquote>
-<p>树状结构虚拟列表，基于 element-ui 和 vue-virtual-scroller</p>
-</blockquote>
-<div class="tag link"><a class="link-card" title="github" target="_blank" rel="noopener" href="https://github.com/wchbrad/vue-easy-tree"><div class="left"><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/256/safari.png"/></div><div class="right"><p class="text">github</p><p class="url">https://github.com/wchbrad/vue-easy-tree</p></div></a></div>
-
-<h3 id="使用例子-2"><a href="#使用例子-2" class="headerlink" title="使用例子"></a>使用例子</h3><blockquote>
-<p>相对于 element-ui 的 tree 好像只加了 height prop 即可实现。</p>
-</blockquote>
+<p>动态高度官方例子</p>
+<div class="tag link"><a class="link-card" title="动态高度官方例子" target="_blank" rel="noopener" href="https://vue-virtual-scroller.netlify.app/demos/dynamic-scroller.html"><div class="left"><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/256/safari.png"/></div><div class="right"><p class="text">动态高度官方例子</p><p class="url">https://vue-virtual-scroller.netlify.app/demos/dynamic-scroller.html</p></div></a></div>
 
   
   
@@ -3069,7 +3031,7 @@ article > p {
         
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-07-23T09:39:39+00:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-07-23T09:52:45+00:00">
   <a class='notlink'>
     <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
     <p>更新于：2026年7月23日</p>
@@ -3168,7 +3130,7 @@ article > p {
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-virtual-scroller"><span class="toc-text">vue-virtual-scroller</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90"><span class="toc-text">使用例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-virtual-scroll-list"><span class="toc-text">vue-virtual-scroll-list</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90-1"><span class="toc-text">使用例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wchbrad-vue-easy-tree"><span class="toc-text">@wchbrad&#x2F;vue-easy-tree</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90-2"><span class="toc-text">使用例子</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-virtual-scroller%EF%BC%88%E5%8F%AF%E5%8A%A8%E6%80%81%E9%AB%98%E5%BA%A6%EF%BC%89"><span class="toc-text">vue-virtual-scroller（可动态高度）</span></a></li></ol>
     </div>
   </section>
 
