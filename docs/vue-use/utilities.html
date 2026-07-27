@@ -10,8 +10,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -28,7 +26,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>标签：下载 - 贝er</title>
+  <title>vue-use - 时间 - 贝er</title>
   
 
   
@@ -2843,7 +2841,7 @@ article > p {
   
     
       <!-- see: /layout/_partial/scripts/coverCtrl.ejs -->
-        <div id="none" class='cover-wrapper  search' style="display: none;">
+        <div id="none" class='cover-wrapper post search' style="display: none;">
           
             <div class='cover-bg' style='background-image:url()'></div>
           
@@ -2927,78 +2925,183 @@ article > p {
           
 
 
-
 <div id="l_main" class=''>
+  <article class=" article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
+
+
+  
+  <div class="article-meta" id="top">
     
-      
-  <section class="post-list">
     
-      
+    
+      <h1 class="title">
+        vue-use - 时间
+      </h1>
+      <div class='new-meta-box'>
         
           
+            
+<div class='new-meta-item author'>
+  <a class='author' href="https://bei-er.github.io/blog/" rel="nofollow">
+    <img no-lazy src="https://avatars.githubusercontent.com/u/28495915?v=4">
+    <p>贝er</p>
+  </a>
+</div>
+
+          
         
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/blog/posts/10396/">
-        📥 记录 - 实现调用游览器下载功能
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      <p>通过网页，下载文件是很常见的需求，如果是图片，txt等，点击链接就会直接在游览器中打开文件 📁 ，<br>想实现点击后下载，需要后端的配合。</p>
-    
+          
+            
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fad fa-keyboard PETERRIVE fa-fw" aria-hidden="true"></i>
+      <p>字数：152 字</p>
+    </a>
   </div>
-  
-    <div class='meta-v3' line_style='hidden'>
-      <div>
-        
-        <time>2020-04-22</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/blog/categories/%E8%AE%B0%E5%BD%95/">记录</a>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fad fa-hourglass-half BELIZEHOLE fa-fw" aria-hidden="true"></i>
+      <p>时长：1 分钟</p>
+    </a>
+  </div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  
+  <h2 id="useOffsetPagination"><a href="#useOffsetPagination" class="headerlink" title="useOffsetPagination"></a>useOffsetPagination</h2><blockquote>
+<p>分页</p>
+</blockquote>
+<pre><code class="javascript">import &#123; useOffsetPagination &#125; from &#39;@vueuse/core&#39;
+
+function fetchData(&#123; currentPage, currentPageSize &#125;: &#123; currentPage: number, currentPageSize: number &#125;) &#123;
+  fetch(currentPage, currentPageSize).then((responseData) =&gt; &#123;
+    data.value = responseData
+  &#125;)
+&#125;
+
+const &#123;
+  currentPage,
+  currentPageSize,
+  pageCount,
+  isFirstPage,
+  isLastPage,
+  prev,
+  next,
+&#125; = useOffsetPagination(&#123;
+  total: database.value.length,
+  page: 1,
+  pageSize: 10,
+  onPageChange: fetchData,
+  onPageSizeChange: fetchData,
+&#125;)
+</code></pre>
+<h2 id="useMemoize"><a href="#useMemoize" class="headerlink" title="useMemoize"></a>useMemoize</h2><blockquote>
+<p>根据缓存函数结果</p>
+</blockquote>
+<pre><code class="typescript">import &#123; useMemoize &#125; from &#39;@vueuse/core&#39;
+
+const getUser = useMemoize(
+  async (userId: number): Promise&lt;UserData&gt; =&gt; &#123;
+    return axios.get(`users/$&#123;userId&#125;`).then((&#123; data &#125;) =&gt; data)
+  &#125;
+)
+
+const user1 = await getUser(1) // Request users/1
+const user2 = await getUser(2) // Request users/2
+// ...
+const user1 = await getUser(1) // Retrieve from cache
+
+// ...
+const user1 = await getUser.load(1) // Request users/1
+
+// ...
+getUser.delete(1) // Delete cache from user 1
+getUser.clear() // Clear full cache
+</code></pre>
+
+  
+    <div class='div-ori-link'>
+      <a class='ori-link' target="_blank" rel="noopener" href='https://vueuse.org/functions.html#category=Utilities'>
+        去源站阅读
+      </a>
+    </div>
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <!-- <a class='readmore' href='/blog/posts/10396/'>
-            <i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多
-          </a> -->
-          <a class="link-fx-1 color-contrast-higher" href="/blog/posts/10396/">
-            <span><i class="fad fa-books fa-fw" aria-hidden="true" title="Read Me"></i> 阅读更多</span>
-            <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="15.5"/><line x1="10" y1="18" x2="16" y2="12"/><line x1="16" y1="12" x2="22" y2="18" /></g></svg>
-          </a>
-        </div>
+      
+      
       
     </div>
   
+  
+    
 
-</div>
 
-          </div>
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          
+
         
       
-    
-  </section>
+        
+          
+
+        
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2026-07-27T11:02:07+00:00">
+  <a class='notlink'>
+    <i class="fad fa-edit GREENSEA fa-fw" aria-hidden="true"></i>
+    <p>更新于：2026年7月27日</p>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fad fa-calendar-alt TURQUOISE fa-fw" aria-hidden="true"></i>
+    <p>发布于：2026年7月23日</p>
+  </a>
+</div>
+
+        
+      
+    </div>
+  </div>
+
+
   
-    
+  
+
+  <!-- 强制隐藏上一篇和下一篇，因为可能会暴露日记内容 -->
+  
+</article>
+
+
+  
+
   
 
 
-    
-  
+
+
+
+
 </div>
 <aside id='l_side'>
   
@@ -3046,194 +3149,17 @@ article > p {
     
     
 
-<section class="widget shadow desktop">
-  
-  <header>
-    
-      <i class="fad fa-award ASBESTOS fa-fw" aria-hidden="true"></i><span class='name'>站点信息</span>
-    
-  </header>
-
-
-  <div class='content'>
-    <div class="webinfo">
-      
-        <div class="webinfo-item">
-          <div>文章数目：</div>
-          <div>77 篇</div>
-        </div>
-      
-
-      
-        <div class="webinfo-item">
-          <div>已运行时间：</div>
-          <div id="webinfo-runtime-count" publish_date="03/24/2020 21:34:09"></div>
-        </div>
-        <script>
-          var BirthDay = new Date(new Date('2019/06/01'));
-          var today = new Date();
-          var timeold = (today.getTime() - BirthDay.getTime());
-          var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
-          document.getElementById('webinfo-runtime-count').innerHTML = daysold + ' 天';
-        </script>
-      
-
-
-      
-        <div class="webinfo-item">
-          <div>本站总字数：</div>
-          <div>31.5k </div>
-        </div>
-      
-
-      
-
-      
-
-      
-        <div class="webinfo-item">
-          <div>最后活动时间：</div>
-          
-            <div id="last-update" style="display: none;">Mon Jul 27 2026 11:02:44 GMT+0000 (Coordinated Universal Time)</div>
-            <div id="last-update-show">2026-07-27 日</div>
-          
-        </div>
-        
-        <script>
-          function timeago(dateTimeStamp) {
-              var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
-              var hour = minute * 60;
-              var day = hour * 24;
-              var week = day * 7;
-              var month = day * 30;
-              var now = new Date().getTime(); //获取当前时间毫秒
-              var diffValue = now - dateTimeStamp; //时间差
-              if (diffValue < 0) {
-                  return;
-              }
-              var minC = diffValue / minute; //计算时间差的分，时，天，周，月
-              var hourC = diffValue / hour;
-              var dayC = diffValue / day;
-              var weekC = diffValue / week;
-              var monthC = diffValue / month;
-              if (monthC >= 1 && monthC <= 3) {
-                  result = " " + parseInt(monthC) + " 月前"
-              } else if (weekC >= 1 && weekC <= 3) {
-                  result = " " + parseInt(weekC) + " 周前"
-              } else if (dayC >= 1 && dayC <= 6) {
-                  result = " " + parseInt(dayC) + " 天前"
-              } else if (hourC >= 1 && hourC <= 23) {
-                  result = " " + parseInt(hourC) + " 小时前"
-              } else if (minC >= 1 && minC <= 59) {
-                  result = " " + parseInt(minC) + " 分钟前"
-              } else if (diffValue >= 0 && diffValue <= minute) {
-                  result = "刚刚"
-              } else {
-                  var datetime = new Date();
-                  datetime.setTime(dateTimeStamp);
-                  var Nyear = datetime.getFullYear();
-                  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-                  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-                  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-                  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-                  var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-                  result = Nyear + "-" + Nmonth + "-" + Ndate
-              }
-              return result;
-          }
-          var lastUpDate = document.getElementById('last-update').innerHTML;
-          try {
-            document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
-          } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2026-07-27 日';
-          }
-        </script>
-        
-      
-    </div>
-  </div>
-</section>
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget category shadow desktop">
-    
-  <header>
-    
-      <a href='/categories/'><i class="fad fa-folder-open CARROT fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E5%8F%A5%E5%AD%90/" href="/blog/categories/%E5%8F%A5%E5%AD%90/"
-            id="blogcategoriesE58FA5E5AD90"
-            ><div class='name'>句子</div><div class='badge'>(2)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E8%AE%B0%E5%BD%95/" href="/blog/categories/%E8%AE%B0%E5%BD%95/"
-            id="blogcategoriesE8AEB0E5BD95"
-            ><div class='name'>记录</div><div class='badge'>(29)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/blog/categories/%E9%85%B7%E5%BA%93/" href="/blog/categories/%E9%85%B7%E5%BA%93/"
-            id="blogcategoriesE985B7E5BA93"
-            ><div class='name'>酷库</div><div class='badge'>(41)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-  
-
-  
-    
-    
-
 <section class="widget list shadow desktop mobile">
   
   <header>
     
-      <i class="fad fa-align-justify POMEGRANATE fa-fw" aria-hidden="true"></i><span class='name'>更多</span>
+      <i class="fad fa-list ASBESTOS fa-fw fa-fw" aria-hidden="true"></i><span class='name'>更好的 vue-use 文档</span>
     
   </header>
 
 
   <div class='content'>
     <ul class="list entry navigation">
-      
-        <li><a class="flat-box" title="/blog/docs/lodash/collection" href="/blog/docs/lodash/collection"
-          
-          
-          id="blogdocslodashcollection"
-          >
-          <div class='name'>
-            
-            更好的 lodash 文档
-          </div>
-          
-        </a></li>
-      
-        <li><a class="flat-box" title="/blog/docs/moment/parsing" href="/blog/docs/moment/parsing"
-          
-          
-          id="blogdocsmomentparsing"
-          >
-          <div class='name'>
-            
-            更好的 moment 文档
-          </div>
-          
-        </a></li>
       
         <li><a class="flat-box" title="/blog/docs/vue-use/state" href="/blog/docs/vue-use/state"
           
@@ -3242,7 +3168,103 @@ article > p {
           >
           <div class='name'>
             
-            更好的 vue-use 文档
+            状态
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/elements" href="/blog/docs/vue-use/elements"
+          
+          
+          id="blogdocsvue-useelements"
+          >
+          <div class='name'>
+            
+            元素
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/browser" href="/blog/docs/vue-use/browser"
+          
+          
+          id="blogdocsvue-usebrowser"
+          >
+          <div class='name'>
+            
+            浏览器
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/component" href="/blog/docs/vue-use/component"
+          
+          
+          id="blogdocsvue-usecomponent"
+          >
+          <div class='name'>
+            
+            组件
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/watch" href="/blog/docs/vue-use/watch"
+          
+          
+          id="blogdocsvue-usewatch"
+          >
+          <div class='name'>
+            
+            监听
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/reactivity" href="/blog/docs/vue-use/reactivity"
+          
+          
+          id="blogdocsvue-usereactivity"
+          >
+          <div class='name'>
+            
+            响应式
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/time" href="/blog/docs/vue-use/time"
+          
+          
+          id="blogdocsvue-usetime"
+          >
+          <div class='name'>
+            
+            时间
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/utilities" href="/blog/docs/vue-use/utilities"
+          
+          
+          id="blogdocsvue-useutilities"
+          >
+          <div class='name'>
+            
+            工具
+          </div>
+          
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/docs/vue-use/router" href="/blog/docs/vue-use/router"
+          
+          
+          id="blogdocsvue-userouter"
+          >
+          <div class='name'>
+            
+            路由
           </div>
           
         </a></li>
@@ -3253,8 +3275,32 @@ article > p {
 
   
 
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fad fa-list ASBESTOS fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#useOffsetPagination"><span class="toc-text">useOffsetPagination</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#useMemoize"><span class="toc-text">useMemoize</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
 
 </aside>
+
 
 
           <!--此文件用来存放一些不方便取值的变量-->
@@ -3262,8 +3308,8 @@ article > p {
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="vue-use - 时间";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   //  see: /layout/_partial/scripts/coverCtrl.ejs
